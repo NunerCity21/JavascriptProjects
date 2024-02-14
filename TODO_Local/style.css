@@ -46,6 +46,15 @@ body {
   background-color: rgba(255, 72, 0, 0.674); /* 0.5 alpha corresponds to 50% transparency */
 }
 
+.btn2 {
+  font-size: 14px;
+  height: 40px; /* Make the button the same height as the select tag */
+  width: 100px;
+  background-color: rgba(255, 72, 0, 0.674); /* 0.5 alpha corresponds to 50% transparency */
+  border: 2px solid #fff;
+  border-radius: 10px 10px;
+}
+
 .custom-size {
   max-width: 100%;
 }/*# sourceMappingURL=style.css.map */
