@@ -3,8 +3,10 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(45deg, #a000f6, #ff0000);
+  background-image: url(wp8828674.webp);
+  /* background: linear-gradient(45deg, #a000f6, #ff0000); */
   font-family: "Emblema One", sans-serif;
+  color: white;
 }
 
 #mainDiv {
@@ -14,12 +16,14 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   border-radius: 10px;
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
 }
 
 #header {
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   border-radius: 10px 10px 0 0;
   width: 450px;
   height: 75px;
@@ -27,11 +31,6 @@ body {
   top: -2px; /* Half of the header's height to make it overlap */
   display: flex;
   align-items: center;
-}
-
-#heaader > h5 {
-  border: 2px solid #fff;
-  border-radius: 10px;
 }
 
 #lists {
@@ -43,18 +42,80 @@ body {
 .btn {
   font-size: 14px;
   height: 40px; /* Make the button the same height as the select tag */
-  background-color: rgba(255, 72, 0, 0.674); /* 0.5 alpha corresponds to 50% transparency */
+  background-color: rgb(255, 255, 255); /* 0.5 alpha corresponds to 50% transparency */
 }
 
 .btn2 {
   font-size: 14px;
   height: 40px; /* Make the button the same height as the select tag */
   width: 100px;
-  background-color: rgba(255, 72, 0, 0.674); /* 0.5 alpha corresponds to 50% transparency */
-  border: 2px solid #fff;
+  background-color: rgb(255, 255, 255); /* 0.5 alpha corresponds to 50% transparency */
+  border: 1px solid #000000;
   border-radius: 10px 10px;
 }
 
 .custom-size {
   max-width: 100%;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+#title span {
+  display: inline-block;
+}
+
+#openedList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#title {
+  display: flex;
+  align-items: center;
+  margin-top: 80px; /* Adjust the margin-top as needed */
+  margin-left: 10px; /* Adjust the margin-left as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#tasks {
+  margin-top: 140px; /* Adjust the margin-top as needed */
+  margin-left: 10px; /* Adjust the margin-left as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(67vh - 140px);
+}
+
+#tasks span {
+  margin-bottom: 5px; /* Adjust the margin-bottom for vertical alignment */
+}
+
+#tasks input[type=checkbox] {
+  margin-right: 5px; /* Adjust the margin-right as needed */
+}
+
+#tasks span input[type=checkbox] {
+  margin-bottom: 18px; /* Adjust the margin-top for vertical alignment */
+}
+
+#tasks span p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#title h3 {
+  margin-right: 10px;
+}
+
+#tasks div {
+  display: flex;
+  align-items: center;
 }/*# sourceMappingURL=style.css.map */
