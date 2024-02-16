@@ -23,16 +23,16 @@
             </div>
         </div>
 
-        <!-- <div id="nameList" class="text-center">
+        <div id="nameList" class="text-center">
             <h3>Name Your New List!</h3>
             <p>You'll be able to make changes once you name your new list! A list name can only be 17 characters long.</p>
             <form>
                 <input type="text" id="newListInput" class="form-control" placeholder="Enter A List Name">
                 <button type="submit" class="btn2 mt-2">Submit</button>
             </form>
-        </div> -->
+        </div>
 
-        <div id="openedList">
+        <div id="openedList" class="d-flex">
             <div id="title" class="align-self-start d-flex justify-content-between">
                 <div>
                     <span> <h3>List Name</h3> </span>
