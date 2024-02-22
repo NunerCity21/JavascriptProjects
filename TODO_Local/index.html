@@ -14,11 +14,11 @@
 <body>
     <div id="mainDiv" class="container d-flex flex-column align-items-center justify-content-center custom-size">
         <div id="header" class="d-flex justify-content-between align-items-center mb-3">
-            <button class="btn ms-2">New List</button>
-            <h5 class="text-center mx-4 pt-1">To-Do List</h5>
+            <button id="newListBtn" class="btn ms-2">New List</button>
+            <h5 id="pageLogo" class="text-center mx-4 pt-1 hover">To-Do List</h5>
             <div class="d-flex flex-column align-items-end">
                 <select id="lists" class="form-select me-2" aria-label="Open A List">
-                    <option value="choose">Open A List</option>
+                    <option id="removeMe" value="choose">Open A List</option>
                 </select>
             </div>
         </div>

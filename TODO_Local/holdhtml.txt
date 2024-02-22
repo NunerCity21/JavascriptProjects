@@ -14,11 +14,11 @@
 <body>
     <div id="mainDiv" class="container d-flex flex-column align-items-center justify-content-center custom-size">
         <div id="header" class="d-flex justify-content-between align-items-center mb-3">
-            <button class="btn ms-2">New List</button>
+            <button id="newListBtn" class="btn ms-2">New List</button>
             <h5 class="text-center mx-4 pt-1">To-Do List</h5>
             <div class="d-flex flex-column align-items-end">
                 <select id="lists" class="form-select me-2" aria-label="Open A List">
-                    <option value="choose">Open A List</option>
+                    <option id="removeMe" value="choose">Open A List</option>
                 </select>
             </div>
         </div>
@@ -26,9 +26,9 @@
         <div id="nameList" class="text-center">
             <h3>Name Your New List!</h3>
             <p>You'll be able to make changes once you name your new list! A list name can only be 17 characters long.</p>
-            <form>
+            <form onsubmit="submitFormReturn();return false">
                 <input type="text" id="newListInput" class="form-control" placeholder="Enter A List Name">
-                <button type="submit" class="btn2 mt-2">Submit</button>
+                <button id="newListNameBtn" type="submit" class="btn2 mt-2">Submit</button>
             </form>
         </div>
 
@@ -52,7 +52,7 @@
                 </div>
                 <div id="taskFinish">
                     <button class="btn">Clear Checked</button>
-                    <button class="btn">Save List</button>
+                    <button class="btn">Save List List</button>
                     <button class="btn">Delete List</button>
                 </div>
             </div>
@@ -61,3 +61,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+ Note: This Was To Find Html And Insert It Into The Html For JS, Changes Have Been Made, This Is Out To Date.
