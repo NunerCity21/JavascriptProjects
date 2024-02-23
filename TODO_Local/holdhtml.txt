@@ -64,3 +64,4 @@
 
 
  Note: This Was To Find Html And Insert It Into The Html For JS, Changes Have Been Made, This Is Out To Date.
+ Note: To Get The Most UpToDate Code, View Added Html And Remove Html In The JS File. OR Use Dev Tools To View Changes.
