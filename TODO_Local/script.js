@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Go Back To The Welcome Page On "To-Do List" Text Click
     var pageLogo = document.getElementById("pageLogo");
     pageLogo.addEventListener("click", function() {
         location.reload();
@@ -6,15 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     
     var listsDropdown = document.getElementById("lists");
     
-    // Load lists from local storage on page load
+    // Get Lists Saved In Local Storage
     loadListsFromLocalStorage();
 
-    // New List Watcher
+    // Watcher To Make New List
     var newListButton = document.getElementById("newListBtn");
     newListButton.addEventListener("click", function () {
         var welcomeDiv = document.getElementById("welcome");
         var nameListDiv = document.getElementById("nameList");
-
+        
         if (welcomeDiv) {
             welcomeDiv.remove();
             nameListDiv.innerHTML = createNameListHtml();
@@ -59,12 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Dropdown change watcher
+    // Watcher To See When A List Is Choosen From The Dropdown
     var listsDropdown = document.getElementById("lists");
     listsDropdown.addEventListener("change", function () {
         var selectedListName = listsDropdown.value;
 
-        // Remove the "Open A List" option and welcome div
+        // Remove Welcome Div And The Open A List Option
         var openListOption = document.querySelector('#lists option[value="choose"]');
         if (openListOption) {
             openListOption.remove();
@@ -84,8 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        
-
+        // Add The Content Inside The Title Id
         var title = document.getElementById("title");
         title.innerHTML = `
             <div>
@@ -97,9 +97,10 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
 
-        // Load tasks for the selected list
+        // Reload The Tasks In The Div (Up To Date)
         loadTasks(selectedListName);
 
+        // Add A New Task To The List
         var addTask = document.getElementById("addTask");
         addTask.addEventListener("click", function () {
             var nameNewTask = document.getElementById("nameNewTask");
@@ -118,6 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("This Task Name Has Already Been Used in the List.");
                     return;
                 }
+
+                if (newTaskInput === '' || /^\s+$/.test(newTaskInput)) {
+                    alert("Cannot Submit Because Nothing Was Submitted.");
+                    return;
+                }
+
                 document.getElementById("newTaskInput").value = '';
                 // Add the task to the list and local storage
                 addTaskToList(selectedListName, newTaskInput);
@@ -129,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-        // Ensure that tasksDiv exists before adding event listener
+        // Strik Through Tasks When Checked | Check Div First
         var tasksDiv = document.getElementById("tasks");
         if (tasksDiv) {
             tasksDiv.addEventListener("change", function (event) {
@@ -143,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         
-            // Clear Checked button click watcher
+            // Clear All The Checked Tasks
             var clearCheckedBtn = document.getElementById("taskFinish").querySelector("#clearCheckedBtn");
             if (clearCheckedBtn) {
                 clearCheckedBtn.addEventListener("click", function () {
@@ -164,16 +171,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         } else {
-            console.error("Element with ID 'tasks' not found.");
+            console.warn("Element with ID 'tasks' not found.");
         }
-
+        
+        // Change List Name
         var titleIcon = document.getElementById("titleIcon");
         titleIcon.addEventListener("click", function () {
             var titleText = document.getElementById("titleText");
 
-            newName = titleText.innerText.trim(); // Trim used to get h3 text.
+            newName = titleText.innerText.trim(); // Trim To Get Text
 
-            // Check The Icon
+            // Current Icon = Edit Then Allow Edit | Current Icon = Save Then Run Checks And Save
             if (titleIcon.classList.contains("fa-pen-to-square")) {
                 titleText.setAttribute("contenteditable", "true");
                 titleIcon.classList.remove("fa-pen-to-square");
@@ -182,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 oldName = newName
             } else if (titleIcon.classList.contains("fa-floppy-disk")) {
-                //Check List name and char
+                // Check For List Name, Length, And Space With Text
                 if (isListNameUsed(newName) ) {
                     titleText.innerText =  oldName;
                     titleText.removeAttribute("contenteditable");
@@ -197,6 +205,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     titleIcon.classList.remove("fa-floppy-disk");
                     titleIcon.classList.add("fa-pen-to-square");
                     alert("The List Name Must Be 12 Characters Or Lower.");
+                    return;
+                }
+                if (newName === '' || /^\s+$/.test(newName)) {
+                    titleText.innerText =  oldName;
+                    titleText.removeAttribute("contenteditable");
+                    titleIcon.classList.remove("fa-floppy-disk");
+                    titleIcon.classList.add("fa-pen-to-square");
+                    alert("Cannot Submit Because Nothing Was Submitted.");
                     return;
                 }
                 titleText.removeAttribute("contenteditable");
@@ -215,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        initializeWatcher();
+        initializeWatcher(); // Used To Start The Watch Of Task Name Editing. (Error: When The Tasks Are Reloaded; Breaks. On Reload It Loses Contact With The Original Tasks And Doesnt Connect To The New Tasks. There For Making This A Function And Running It On Js File Startup & Task Reload Should Make It Work As Long As There Is A List Open.)
 
         function initializeWatcher() {
             var taskIcons = document.querySelectorAll('.taskDiv .fa-pen-to-square.Task2');
@@ -226,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // console.log(parentDiv); // Log the parent element
                     // console.log(parentDiv.children[1].firstElementChild);
                     var taskTextElement = editIcon.parentNode.parentNode.children[1].firstElementChild;
-                    console.log(taskTextElement);
+                    // console.log(taskTextElement);
         
                     if (currentlyEditedTask && currentlyEditedTask !== taskTextElement) {
                         alert("Only One Task Can Be Edited At A Time. Please Finish Editing Your Task Before Editing Another.");
@@ -234,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
         
                     newName = taskTextElement.innerText.trim();
-                    // Check The Icon
+                    // If Icon = Edit Then Make Editable | If Icon = Save Then Run Checks And Save
                     if (editIcon.classList.contains("fa-pen-to-square")) {
                         taskTextElement.setAttribute("contenteditable", "true");
                         editIcon.classList.remove("fa-pen-to-square");
@@ -243,8 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         currentlyEditedTask = taskTextElement;
                         oldName = newName
                     } else if (editIcon.classList.contains("fa-floppy-disk")) {
-                        //Check List name and char
-                        if (isTaskUsed(selectedListName, newName) ) { //Changes: Make sure this task name can be used. Change this to do that. Gotta get the list name too.
+                        // Check If Task Name Has Been Used, As Well As Checking There Is Space With Text
+                        if (isTaskUsed(selectedListName, newName) ) {
                             taskTextElement.innerText =  oldName;
                             taskTextElement.removeAttribute("contenteditable");
                             editIcon.classList.remove("fa-floppy-disk");
@@ -253,19 +269,28 @@ document.addEventListener("DOMContentLoaded", function () {
                             alert("This Task Name Has Already Been Used.");
                             return;
                         }
+                        if (newName === '' || /^\s+$/.test(newName)) {
+                            taskTextElement.innerText =  oldName;
+                            taskTextElement.removeAttribute("contenteditable");
+                            editIcon.classList.remove("fa-floppy-disk");
+                            editIcon.classList.add("fa-pen-to-square");
+                            currentlyEditedTask = null;
+                            alert("Cannot Submit Because Nothing Was Submitted.");
+                            return;
+                        }
                         taskTextElement.removeAttribute("contenteditable");
                         editIcon.classList.remove("fa-floppy-disk");
                         editIcon.classList.add("fa-pen-to-square");
                             
                         updateTaskInList(selectedListName, oldName, newName);
                         // loadTasks(selectedListName);
-                        currentlyEditedTask = null;
+                        currentlyEditedTask = null; // Used To Control Tasks Currently Edited
                     }
                 });
             });
         }
 
-        // Clear Checked button click watcher
+        // Watcher: When The Clear Tasks Get Clicked
         var clearCheckedBtn = document.getElementById("taskFinish").querySelector("#clearCheckedBtn");
         if (clearCheckedBtn) {
             clearCheckedBtn.addEventListener("click", function () {
@@ -278,18 +303,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         var taskToRemove = taskText.textContent;
                         removeTaskFromList(selectedListName, taskToRemove);
 
-                        // Remove the task from the DOM
                         var taskDiv = checkbox.parentNode.parentNode;
                         taskDiv.parentNode.removeChild(taskDiv);
                     }
                 });
             });
         } else {
-            console.error("Element with ID 'clearCheckedBtn' not found.");
+            console.warn("Element with ID 'clearCheckedBtn' not found.");
         }
     });
 
-    // Task completion watcher
     var tasksDiv = document.getElementById("tasks");
     tasksDiv.addEventListener("change", function (event) {
         var target = event.target;
@@ -318,24 +341,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // Load tasks from local storage for the selected list and add event listeners
+    // Load Tasks From Local Storage For The Selected List And Add Event Listeners
     function loadTasks(listName) {
         var tasks = JSON.parse(localStorage.getItem(listName)) || [];
         var tasksDiv = document.getElementById("tasks");
 
-        // Clear existing tasks in tasksDiv
+        // Clear Current Tasks In The Tasks Div
         tasksDiv.innerHTML = '';
 
-        // Create nameNewTask div and append it to tasksDiv
         var nameNewTaskDiv = document.createElement("div");
         nameNewTaskDiv.id = "nameNewTask";
         tasksDiv.appendChild(nameNewTaskDiv);
 
-        // Render each task in the tasksDiv
+        // Render Tasks 
         tasks.forEach(function (task, index) {
             var taskDiv = document.createElement("div");
-            taskDiv.classList.add("taskDiv"); // Add a class to the task parent div
-            taskDiv.draggable = true; // Add draggable attribute
+            taskDiv.classList.add("taskDiv");
+            taskDiv.draggable = true; // Draggable For Orginize
             taskDiv.innerHTML = `
                 <span> <input class="hover" type="checkbox" title="Click Checkbox To Clear Task!"> </span>
                 <span class="taskMargin"> <p>${task}</p> </span>
@@ -344,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tasksDiv.appendChild(taskDiv);
         });
 
-        // Ensure that taskFinish is always at the end
+        // Task Finish Will Be The Last Div
         tasksDiv.innerHTML += `
             <div id="taskFinish">
                 <button class="btn" id="clearCheckedBtn">Clear Checked</button>
@@ -358,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.open("help.html", "_blank");
         });
 
-        // Add event listeners after loading tasks
+        // Click Watcher For The Clear Tasks Button, After Its Loaded
         var clearCheckedBtn = document.getElementById("clearCheckedBtn");
         clearCheckedBtn.addEventListener("click", function () {
             var selectedListName = listsDropdown.value;
@@ -370,47 +392,44 @@ document.addEventListener("DOMContentLoaded", function () {
                     var taskToRemove = taskText.textContent;
                     removeTaskFromList(selectedListName, taskToRemove);
 
-                    // Remove the task from the DOM
                     var taskDiv = checkbox.closest('div');
                     taskDiv.parentNode.removeChild(taskDiv);
                 }
             });
         });
 
-        // Other event listeners can go here
-
-        // Add drag-and-drop event listeners
+        // Drag And Drop Listeners
         tasksDiv.addEventListener('dragstart', handleDragStart);
         tasksDiv.addEventListener('dragover', handleDragOver);
         tasksDiv.addEventListener('drop', handleDrop);
 
     }
-    // Add a task to the list and local storage
+    // Add A Task To The Current Open List
     function addTaskToList(listName, task) {
         var tasks = JSON.parse(localStorage.getItem(listName)) || [];
         tasks.push(task);
         localStorage.setItem(listName, JSON.stringify(tasks));
     }
 
-    // Check if a task has already been used in the list
+    // Make Sure The Task Hasn't Been Used In The Current List
     function isTaskUsed(listName, task) {
         var tasks = JSON.parse(localStorage.getItem(listName)) || [];
         return tasks.includes(task);
     }
 
-    // Load lists from local storage on page load
+    // Load Lists From Local Storage On Page Load
     function loadListsFromLocalStorage() {
         var lists = JSON.parse(localStorage.getItem("lists")) || [];
         var optionsDropdown = document.getElementById("lists");
 
-        // Display each list name in the dropdown
+        // Add Lists To The Dropdown
         lists.forEach(function (listName) {
             var newOption = `<option value="${listName}">${listName}</option>`;
             optionsDropdown.innerHTML += newOption;
         });
     }
 
-    // Create HTML for naming a new list
+    // Div To Make A New List
     function createNameListHtml() {
         return `
             <h3>Name Your New List!</h3>
@@ -422,28 +441,33 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     }
 
-    // Add submit listener for naming a new list
+    // Submit Button Used On List Name
     function addSubmitListener() {
         var newListForm = document.getElementById("newListForm");
         newListForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent the default form submission behavior
+            event.preventDefault(); // Don't Allow Default Beheavor
 
             var currentInputValue = document.getElementById("newListInput");
             var userInput = currentInputValue.value;
 
-            // Check if the list name is already used
+            // Check List Name To See If It's Been Used.
             if (isListNameUsed(userInput)) {
                 alert("This List Name Has Already Been Used.");
                 return;
             }
 
-            // Check if the list name is 12 characters or below
+            // Check The Char Amount
             if (userInput.length > 12) {
                 alert("The List Name Must Be 12 Characters Or Lower.");
                 return;
             }
 
-            // Add the new list name to the array
+            if (userInput === '' || /^\s+$/.test(userInput)) {
+                alert("Cannot Submit Because Nothing Was Submitted.");
+                return;
+            }
+
+            // Add The List To The Array Of Lists
             addListName(userInput);
 
             // Reload the page
@@ -451,13 +475,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Check if a list name is already used
+    // Functions:  List And Task Managment & Drag And Drop Managment
+
     function isListNameUsed(listName) {
         var lists = JSON.parse(localStorage.getItem("lists")) || [];
         return lists.includes(listName);
     }
 
-    // Add a new list name to the array and local storage
     function addListName(listName) {
         var lists = JSON.parse(localStorage.getItem("lists")) || [];
         lists.push(listName);
@@ -465,7 +489,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function deleteListAndTasks(listName) {
-        // Remove list from local storage
         var lists = JSON.parse(localStorage.getItem("lists")) || [];
         var index = lists.indexOf(listName);
         if (index !== -1) {
@@ -473,11 +496,9 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("lists", JSON.stringify(lists));
         }
 
-        // Remove tasks associated with the list from local storage
         localStorage.removeItem(listName);
     }
 
-    // Function to remove a task from the list and local storage
     function removeTaskFromList(listName, task) {
         var tasks = JSON.parse(localStorage.getItem(listName)) || [];
         var index = tasks.indexOf(task);
@@ -488,7 +509,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to update local storage after modifying tasks
     function updateLocalStorage(listName) {
         var tasksDiv = document.getElementById("tasks");
         var tasks = [];
@@ -537,7 +557,6 @@ function updateListName(oldListName, newListName) {
         localStorage.setItem("lists", JSON.stringify(lists));
     }
 
-    // Update tasks associated with the list in local storage
     var tasks = JSON.parse(localStorage.getItem(oldListName)) || [];
     localStorage.removeItem(oldListName);
     localStorage.setItem(newListName, JSON.stringify(tasks));
@@ -545,90 +564,75 @@ function updateListName(oldListName, newListName) {
 }
 
 
-// Drag and Drop Handlers
+// Drag And Drop Handlers
 var draggedTask = null;
 
 function handleDragStart(event) {
-    console.log("handleDragStart");
+    // console.log("handleDragStart");
     draggedTask = event.target;
     event.dataTransfer.effectAllowed = 'move';
-
-    // Store the task content in a data attribute
     event.dataTransfer.setData('text/plain', draggedTask.querySelector("p").textContent);
 }
 
 function handleDragOver(event) {
-    console.log("handleDragOver");
+    // console.log("handleDragOver");
     if (event.preventDefault) {
-        event.preventDefault(); // Necessary. Allows us to drop.
+        event.preventDefault();
     }
     event.dataTransfer.dropEffect = 'move';
     return false;
 }
 
 function handleDragEnter(event) {
-    console.log("handleDragEnter");
-    event.target.classList.add('over'); // Add the 'over' class to the task being dragged over
+    // console.log("handleDragEnter");
+    event.target.classList.add('over');
 }
 
 function handleDragLeave(event) {
-    console.log("handleDragLeave");
-    event.target.classList.remove('over'); // Remove the 'over' class when leaving a task
+    // console.log("handleDragLeave");
+    event.target.classList.remove('over');
 }
 
 // Handle the drop event
 function handleDrop(event) {
     if (event.stopPropagation) {
-        event.stopPropagation(); // Stops some browsers from redirecting.
+        event.stopPropagation();
     }
 
-    // Don't do anything if dropping the task onto itself
     if (draggedTask !== event.target) {
-        // Find the parent task div for the dragged and target tasks
-        // Inside the handleDrop function
         var draggedTaskDiv = draggedTask.closest('.taskDiv');
         var targetTaskDiv = event.target.closest('.taskDiv');
 
 
-        // Check if the required parent task divs exist
         if (draggedTaskDiv && targetTaskDiv) {
-            // Swap the text content of the dragged task and the target task
             var draggedText = draggedTaskDiv.querySelector(".taskMargin p").textContent;
             var targetText = targetTaskDiv.querySelector(".taskMargin p").textContent;
 
             draggedTaskDiv.querySelector(".taskMargin p").textContent = targetText;
             targetTaskDiv.querySelector(".taskMargin p").textContent = draggedText;
 
-            // Update the local storage order based on the new order
             updateTaskOrder();
         } else {
             console.error("Parent task divs not found for dragged or target task.");
-            console.log("draggedTask:", draggedTask);
-            console.log("event.target:", event.target);
-            console.log("draggedTaskDiv:", draggedTaskDiv);
-            console.log("targetTaskDiv:", targetTaskDiv);
+            console.warn("draggedTask:", draggedTask);
+            console.warn("event.target:", event.target);
+            console.warn("draggedTaskDiv:", draggedTaskDiv);
+            console.warn("targetTaskDiv:", targetTaskDiv);
 
-            // Reset draggedTask to null after the drop
             draggedTask = null;
             return false;
         }
     }
 
-    // Reset draggedTask to null after the drop
     draggedTask = null;
     return false;
 }
 
-
-
-
-// Update the local storage order based on the new order
 function updateTaskOrder() {
     var selectedListName = document.getElementById("lists").value;
     var tasksDiv = document.getElementById("tasks");
     var tasks = [];
 
-    // Iterate through the tasks and update the tasks array
     var taskDivs = tasksDiv.querySelectorAll('div:not(#nameNewTask)');
     taskDivs.forEach(function (taskDiv) {
         var taskText = taskDiv.querySelector(".taskMargin p");
@@ -637,16 +641,11 @@ function updateTaskOrder() {
         }
     });
 
-    // Update local storage with the new task order
     localStorage.setItem(selectedListName, JSON.stringify(tasks));
 }
 
-
-
-
 function handleDragEnd(event) {
     console.log("handleDragEnd");
-    // Remove the 'over' class from all tasks when the dragging ends
     var taskDivs = document.querySelectorAll('#tasks div');
     taskDivs.forEach(function (taskDiv) {
         taskDiv.classList.remove('over');
