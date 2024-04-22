@@ -1,0 +1,24 @@
+{
+  "name": "javascriptprojects",
+  "version": "1.0.0",
+  "description": "## Project #1: To-Do App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NunerCity21/JavascriptProjects.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NunerCity21/JavascriptProjects/issues"
+  },
+  "homepage": "https://github.com/NunerCity21/JavascriptProjects#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
