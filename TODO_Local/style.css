@@ -32,7 +32,7 @@ body {
   width: 450px;
   height: 75px;
   position: absolute;
-  top: -2px; /* Half of the header's height to make it overlap */
+  top: -2px;
   display: flex;
   align-items: center;
 }
@@ -40,20 +40,20 @@ body {
 #lists {
   font-size: smaller;
   padding: 5px;
-  width: 150px; /* Set the width to control the dropdown size */
+  width: 150px;
 }
 
 .btn {
   font-size: 14px;
-  height: 40px; /* Make the button the same height as the select tag */
-  background-color: rgb(255, 255, 255); /* 0.5 alpha corresponds to 50% transparency */
+  height: 40px;
+  background-color: rgb(255, 255, 255);
 }
 
 .btn2 {
   font-size: 14px;
-  height: 40px; /* Make the button the same height as the select tag */
+  height: 40px;
   width: 100px;
-  background-color: rgb(255, 255, 255); /* 0.5 alpha corresponds to 50% transparency */
+  background-color: rgb(255, 255, 255);
   border: 1px solid #000000;
   border-radius: 10px 10px;
 }
@@ -86,8 +86,8 @@ body {
 }
 
 #tasks {
-  margin-top: 140px; /* Adjust the margin-top as needed */
-  margin-left: 10px; /* Adjust the margin-left as needed */
+  margin-top: 140px;
+  margin-left: 10px;
   position: absolute;
   top: 0;
   left: 0;
@@ -98,15 +98,15 @@ body {
 }
 
 #tasks span {
-  margin-bottom: 5px; /* Adjust the margin-bottom for vertical alignment */
+  margin-bottom: 5px;
 }
 
 #tasks input[type=checkbox] {
-  margin-right: 5px; /* Adjust the margin-right as needed */
+  margin-right: 5px;
 }
 
 #tasks span input[type=checkbox] {
-  margin-bottom: 18px; /* Adjust the margin-top for vertical alignment */
+  margin-bottom: 18px;
 }
 
 .Task2 {
@@ -158,21 +158,21 @@ body {
   width: 450px;
   height: 75px;
   position: absolute;
-  top: -2px; /* Half of the header's height to make it overlap */
+  top: -2px;
   display: flex;
   align-items: center;
   display: flex;
   justify-content: center;
-  height: 80px; /* Adjust as needed */
+  height: 80px;
 }
 
 #pageLogo2 {
-  margin: 0; /* Remove default margin */
+  margin: 0;
 }
 
 #help {
-  margin-top: 140px; /* Adjust the margin-top as needed */
-  margin-left: 10px; /* Adjust the margin-left as needed */
+  margin-top: 140px;
+  margin-left: 10px;
   position: absolute;
   top: 0;
   left: 0;
